@@ -1,0 +1,41 @@
+img {border: 0px solid black;}
+.lister {border: 1px solid black; border-spacing:0px; width:100%;}
+.listernx {border: 1px solid black; border-spacing:0px;}
+.head {font-weight: bold; background-color:#ff6600; padding-left: 0px; padding-right:0px;}
+.lendhead {font-weight: bold; background-color:#ff6600;}
+.quickhead {font-weight: bold; background-color:#ff6600;}
+.oddrow {background-color:#dddddd;}
+.lister td {padding-left: 5px; padding-right:5px;}
+.listernx td {padding-left: 5px; padding-right:5px;}
+.lend {color: #ff0000;}
+.expired {color: #ff00ff;}
+.action td {padding-left: 0px; padding-right:0px;}
+.button {
+	border: 2px solid rgb(255, 165, 0);
+	background-color: #dddddd;
+	-moz-border-radius: 5px;
+	cursor: default;
+}
+body,input,button,select {font-family: Sans;}
+
+/*
+img {border: 0px solid black;}
+.lister {border: 1px solid #00ff00; border-spacing:0px; width:100%;}
+.listernx {border: 1px solid #00ff00; border-spacing:0px;}
+.head {font-weight: bold; background-color:#ff6600; padding-left: 0px; padding-right:0px;}
+.lendhead {font-weight: bold; background-color:#ff6600;}
+.quickhead {font-weight: bold; background-color:#ff6600;}
+.oddrow {background-color:#111111;}
+.lister td {padding-left: 5px; padding-right:5px;}
+.listernx td {padding-left: 5px; padding-right:5px;}
+.lend {color: #ff0000;}
+.expired {color: #ff00ff;}
+.action td {padding-left: 0px; padding-right:0px;}
+.button {
+	border: 2px solid rgb(255, 165, 0);
+	background-color: #dddddd;
+	-moz-border-radius: 5px;
+	cursor: default;
+}
+body,input,button,select {font-family: Nimbus Mono L; background-color:black; color: #dddddd;}
+*/
