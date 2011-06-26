@@ -1,0 +1,20 @@
+<html>
+<head>
+<style type="text/css">
+@media print {
+	.hid {
+		display: none;
+	}
+}	
+
+td {text-align: center;}
+</style>
+</head>
+<body onload="window.print()">
+<table>
+<tr><td><img src="ean-13.php?code=1337000000006" /></td><td><img src="ean-13.php?code=1337000000013" /></td><td><img src="ean-13.php?code=1337000000020" /></td></tr>
+<tr><td>Ausleihen</td><td>Zurückgeben</td><td>Abbrechen</td></tr>
+</table>
+<button class="hid" onclick="window.top.killpopup()">Schließen</button>
+</body>
+</html>
