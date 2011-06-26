@@ -1,0 +1,244 @@
+-- MySQL dump 10.13  Distrib 5.5.13, for Linux (i686)
+--
+-- Host: localhost    Database: fichte_bib
+-- ------------------------------------------------------
+-- Server version	5.5.13-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `groups`
+--
+
+DROP TABLE IF EXISTS `groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `groups` (
+  `id` int(11) DEFAULT NULL,
+  `name` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `maxlend` int(11) DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `groups`
+--
+
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO `groups` VALUES (0,'sch',1,28);;
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lend`
+--
+
+DROP TABLE IF EXISTS `lend`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lend` (
+  `pupil_id` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `lend_date` date NOT NULL,
+  `lend_returndate` date DEFAULT NULL,
+  `lend_expiredate` date NOT NULL,
+  `printed` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lend`
+--
+
+LOCK TABLES `lend` WRITE;
+/*!40000 ALTER TABLE `lend` DISABLE KEYS */;
+
+/*!40000 ALTER TABLE `lend` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `locations`
+--
+
+DROP TABLE IF EXISTS `locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `locations` (
+  `id` int(11) DEFAULT NULL,
+  `location` char(30) COLLATE latin1_general_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `locations`
+--
+
+LOCK TABLES `locations` WRITE;
+/*!40000 ALTER TABLE `locations` DISABLE KEYS */;
+INSERT INTO `locations` VALUES (0,'sch');
+/*!40000 ALTER TABLE `locations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mediatypes`
+--
+
+DROP TABLE IF EXISTS `mediatypes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mediatypes` (
+  `id` int(11) NOT NULL,
+  `media` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mediatypes`
+--
+
+LOCK TABLES `mediatypes` WRITE;
+/*!40000 ALTER TABLE `mediatypes` DISABLE KEYS */;
+INSERT INTO `mediatypes` VALUES (0,'Buch'),(2,'CD'),(3,'DVD');
+/*!40000 ALTER TABLE `mediatypes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `meta`
+--
+
+DROP TABLE IF EXISTS `meta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `meta` (
+  `code` int(8) unsigned zerofill DEFAULT '00000000',
+  `display_cols` char(13) COLLATE latin1_general_ci DEFAULT NULL,
+  `remindtext` text COLLATE latin1_general_ci,
+  `fine` float DEFAULT NULL,
+  `formdefaults` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `last_return` date DEFAULT NULL,
+  `last_return_mode` char(1) COLLATE latin1_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `meta`
+--
+
+LOCK TABLES `meta` WRITE;
+/*!40000 ALTER TABLE `meta` DISABLE KEYS */;
+INSERT INTO `meta` VALUES (00000000,'110011000','<h1 style=\"text-align:center;\">Schülerbücherei des Fichte-Gymnasiums</h1>\n<h1 style=\"text-align:center;\">MAHNUNG</h1>\n<p>Liebe/r Frau/Herr __________________________________,<br /><br />\nbitte reichen Sie diese Mahnung an ihren Schüler/ihre Schülerin %pfn %pln aus der Klasse %class weiter.</p>\n<br />\n<p>Liebe/r %pfn %pln,</p>\n<p>du hast dir in der Schülerbücherei ein Buch, ausgeliehen, aber leider die <b>maximale Ausleihzeit</b> überschritten. Bitte bring das Buch schnellstmöglich zurück und bring die <b>Mahngebür</b> von %fine mit. Jede Mahnung kostet %rfine.\n<p>«%title» von %aln, %afn, am %ldate ausgeliehen; du hättest es bis zum %edate zurückgbringen müssen.</p>\n<p>Zur Erinnerung: Dies ist deine %n. Mahnung</p>\n<p>Nach der 4. Mahnung musst du das Buch bezahlen!!</p>\n<p style=\"text-align: right;\">Die Schülerbücherei</p>',0.5,'title,1,lastname,1','2011-12-24','l');
+/*!40000 ALTER TABLE `meta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `objects`
+--
+
+DROP TABLE IF EXISTS `objects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `objects` (
+  `id` int(11) NOT NULL,
+  `media_type` int(11) DEFAULT NULL,
+  `author1_lastname` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `author1_firstname` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `author2_lastname` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `author2_firstname` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `title` char(200) COLLATE latin1_general_ci NOT NULL,
+  `isbn` char(20) COLLATE latin1_general_ci DEFAULT NULL,
+  `publisher` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `year` year(4) DEFAULT NULL,
+  `edition` int(11) DEFAULT NULL,
+  `genre` char(20) COLLATE latin1_general_ci DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `location` int(11) DEFAULT NULL,
+  `user1` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `user2` char(30) COLLATE latin1_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `objects`
+--
+
+LOCK TABLES `objects` WRITE;
+/*!40000 ALTER TABLE `objects` DISABLE KEYS */;
+
+/*!40000 ALTER TABLE `objects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pupils`
+--
+
+DROP TABLE IF EXISTS `pupils`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pupils` (
+  `id` int(11) NOT NULL,
+  `lastname` char(30) COLLATE latin1_general_ci NOT NULL,
+  `firstname` char(30) COLLATE latin1_general_ci NOT NULL,
+  `class` char(3) COLLATE latin1_general_ci NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `card_id` char(13) COLLATE latin1_general_ci DEFAULT NULL,
+  `grp` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pupils`
+--
+
+LOCK TABLES `pupils` WRITE;
+/*!40000 ALTER TABLE `pupils` DISABLE KEYS */;
+
+/*!40000 ALTER TABLE `pupils` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usercols`
+--
+
+DROP TABLE IF EXISTS `usercols`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usercols` (
+  `id` int(11) DEFAULT NULL,
+  `name` char(30) COLLATE latin1_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usercols`
+--
+
+LOCK TABLES `usercols` WRITE;
+/*!40000 ALTER TABLE `usercols` DISABLE KEYS */;
+INSERT INTO `usercols` VALUES (1,'USK');
+/*!40000 ALTER TABLE `usercols` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2011-06-25  0:43:56
