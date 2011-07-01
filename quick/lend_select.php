@@ -156,7 +156,7 @@ $result = mysql_fetch_superarray(mysql_query("SELECT * FROM pupils WHERE id=" . 
 echo "Ausleihen: " . $result[0]["lastname"] . " " . $result[0]["firstname"];
 echo "; Verbleibende Objekte:<span id='remain'> </span>"; 
 ?>
-</div
+</div>
 <div id="selcont">
 </div>
 <form action="#" name="f" onsubmit="return check();">

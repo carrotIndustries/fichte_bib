@@ -120,7 +120,12 @@ Wo:<select name="location" size="1">
 		}
 	?>
 </select>
-
+Status:<select name="state" size="1">
+	<option value="all">Egal</option>
+	<option value="avail">Verfügbar</option>
+	<option value="lend">Ausgeliehen</option>
+	<option value="expired">Überfällig</option>
+</select>
 <br />
 Suche auf folgenden Medien beschränken: 
 <?php

@@ -15,6 +15,7 @@ function longerobject(id) {
 			var resp = req.fetch();
 			if(resp == "done") {
 				alert("Das Objekt wurde verlaengert");
+				list();
 			}
 			else {
 				alert("Fehler");
@@ -51,7 +52,7 @@ function packMediaTypes(f) {
 	
 
 function doSearch(f) {
-	listobjects(f.search_for.value, f.match.value, encodeURIComponent(f.search.value), f.limit.value, packMediaTypes(f), f.order_by.value, f.order.value, f.location.value);
+	listobjects(f.search_for.value, f.match.value, encodeURIComponent(f.search.value), f.limit.value, packMediaTypes(f), f.order_by.value, f.order.value, f.location.value, f.state.value);
 	return false;
 }
 
@@ -63,11 +64,11 @@ function get_display_cols() {
 	return req.fetch().toJSON();
 }
 
-function listobjects(search_for, match, search, limit, media_types, order_by, order, location) {
+function listobjects(search_for, match, search, limit, media_types, order_by, order, location, state) {
 	showThrobber();
 	//alert(media_types);
 	var req = new XMLHttpRequest();
-	var url = "handle.php?do=listobjects&search_for=" + search_for + "&match=" + match + "&search=" + search + "&limit=" + limit + "&mediatypes=" + media_types + "&order_by=" + order_by + "&order=" + order + "&location=" + location;
+	var url = "handle.php?do=listobjects&search_for=" + search_for + "&match=" + match + "&search=" + search + "&limit=" + limit + "&mediatypes=" + media_types + "&order_by=" + order_by + "&order=" + order + "&location=" + location + "&state=" + state;
 	var even = true;
 	var cols = get_display_cols();
 	//alert(url);

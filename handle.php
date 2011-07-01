@@ -3,7 +3,7 @@ require("functions.php");
 $action = $_GET["do"];
 switch($action) {
 	case "listobjects" :
-		listobjects($_GET["search_for"],  $_GET["match"],  $_GET["search"],  $_GET["limit"],  $_GET["mediatypes"],  $_GET["order_by"],  $_GET["order"], $_GET["location"]);
+		listobjects($_GET["search_for"],  $_GET["match"],  $_GET["search"],  $_GET["limit"],  $_GET["mediatypes"],  $_GET["order_by"],  $_GET["order"], $_GET["location"], $_GET["state"]);
 	break;
 	
 	case "addobject" :

@@ -53,7 +53,15 @@ $mode = $result["last_return_mode"];
 			else {
 				alert(objects.length + " Objekte ausgeliehen!");
 			}
-			location.href="listobjects.php";
+			<?php
+			$base= explode(".", basename($_SERVER["HTTP_REFERER"]));
+			if($base[0] == "listobjects") {
+				echo 'location.href="listobjects.php";';
+			}
+			if($base[0] == "lend_select") { 
+				echo 'location.href="quick";';
+			}
+			?>
 		}
 		else {
 			alert("Fehler");
@@ -66,6 +74,7 @@ $mode = $result["last_return_mode"];
 </head>
 <body onLoad="">
 <?php require("header.php") ?>
+
 <div class="lendhead">
 Ausleihen : <?php
 $result = mysql_fetch_superarray(mysql_query("SELECT * FROM pupils WHERE id=" . $pupil));

@@ -67,7 +67,7 @@ function getgroup($id) {
 }
 
 
-function listobjects($search_for, $match, $search, $limit, $mediatypes, $order_by, $order, $location) {
+function listobjects($search_for, $match, $search, $limit, $mediatypes, $order_by, $order, $location, $sstate) {
 	$search_for = mysql_real_escape_string($search_for);
 	$search = mysql_real_escape_string($search);
 	$order_by = mysql_real_escape_string($order_by);
@@ -106,18 +106,22 @@ function listobjects($search_for, $match, $search, $limit, $mediatypes, $order_b
 		$match ="contains";
 	}
 	
-		
-	if($limit == "all") {
+	if($sstate == "all" || $sstate == "avail") {
+		if($limit == "all") {
+			$limit_to = 20000;
+		}
+		if($limit == "l20") {
+			$limit_to = 20;
+		}
+		if($limit == "l50") {
+			$limit_to = 50;
+		}
+		if($limit == "l100") {
+			$limit_to = 100;
+		}
+	}
+	else {
 		$limit_to = 20000;
-	}
-	if($limit == "l20") {
-		$limit_to = 20;
-	}
-	if($limit == "l50") {
-		$limit_to = 50;
-	}
-	if($limit == "l100") {
-		$limit_to = 100;
 	}
 	if(strpos($mediatypes, ":1") !== FALSE) {
 		if(strpos($query, "WHERE") === false) {
@@ -172,11 +176,7 @@ function listobjects($search_for, $match, $search, $limit, $mediatypes, $order_b
 	$result = mysql_fetch_superarray(mysql_query($query));
 	echo "[\n";
 	foreach($result as $item) {
-		$cols = array_getkeys($item);
-		echo "{";
-		foreach($cols as $column) {
-			echo $column . ': "' . addslashes($item[$column]) . '", ';
-		}
+		$show = FALSE;
 		$state = 0;
 		if(!object_available($item["id"])) {
 			$state = 1;
@@ -184,9 +184,47 @@ function listobjects($search_for, $match, $search, $limit, $mediatypes, $order_b
 		if(object_expired($item["id"])) {
 			$state = 2;
 		}
-		echo 'state: ' . $state . ' ';
-		
-		echo "},\n";
+		#echo $state;
+		switch($sstate) {
+			case "all" :
+				$show=TRUE;
+			break;
+			
+			case "avail" :
+				if($state == 0) {
+					$show = TRUE;
+				}
+			break;
+			
+			case "lend" :
+				if(($state == 1) || ($state ==2)) {
+					$show = TRUE;
+				}
+			break;
+			
+			case "expired" :
+				if($state ==2) {
+					$show = TRUE;
+				}
+			break;
+		}
+		if($show) {
+			$cols = array_getkeys($item);
+			echo "{";
+			foreach($cols as $column) {
+				echo $column . ': "' . addslashes($item[$column]) . '", ';
+			}
+			$state = 0;
+			if(!object_available($item["id"])) {
+				$state = 1;
+			}
+			if(object_expired($item["id"])) {
+				$state = 2;
+			}
+			echo 'state: ' . $state . ' ';
+			
+			echo "},\n";
+		}
 	}
 	echo "]";
 }
