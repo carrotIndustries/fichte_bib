@@ -21,5 +21,6 @@ $page = $page[0];
 <button onclick="location.href='formdefaults.php'" <?php echo $page=="formdefaults"?'style="font-weight:bold;"':""?>>Formularvoreinstellungen</button>
 <button onclick="location.href='latest.php'" <?php echo $page=="latest"?'style="font-weight:bold;"':""?>>Rückgabedatum</button>
 <button onclick="location.href='printcodes.php'" <?php echo $page=="printcodes"?'style="font-weight:bold;"':""?>>Barcodes ausdrucken</button>
+<button onclick="location.href='updateclasses.php'" <?php echo $page=="updateclasses"?'style="font-weight:bold;"':""?>>Klassen aktualisieren</button>
 </span>
 </div>
