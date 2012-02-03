@@ -13,12 +13,15 @@ function process() {
 		req.create("handle.php?do=setfine&val=" + $("fine").value);
 		var resp2 = req.fetch();
 	}
-	if((resp == "done")&&(resp2 == "done")) {
+	req.create("handle.php?do=setlpropts&val=" + $("lpr").value);
+	var resp3 = req.fetch();
+	if((resp == "done")&&(resp2 == "done")&&(resp3 == "done")) {
 		alert("Text wurde übernommen");
 	}
 	else {
 		alert(resp);
 		alert(resp2);
+		alert(resp3);
 	
 	}
 }
@@ -36,4 +39,9 @@ function init() {
 	var resp = req.fetch();
 	//alert(resp);
 	$("fine").value = resp;
+	
+	req.create("handle.php?do=getlpropts");
+	var resp = req.fetch();
+	//alert(resp);
+	$("lpr").value = resp;
 }

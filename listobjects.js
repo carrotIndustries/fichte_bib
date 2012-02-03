@@ -301,10 +301,10 @@ function listobjects(search_for, match, search, limit, media_types, order_by, or
 }
 
 function doDeleteObject(id) {
-	q=window.confirm("Soll das Objekt geloescht werden?");
+	q=window.confirm("Soll das Objekt gelöscht werden?");
 	if(q) {
 		if(deleteObject(id)) {
-			alert("Objekt wurde geloescht");
+			alert("Objekt wurde gelöscht");
 		}
 		doSearch(document.forms["search"]);
 	}
@@ -329,7 +329,7 @@ function doReturnObject(id) {
 		list();
 	}
 	else {
-		alert("Objekt war überfaellig");
+		alert("Objekt war überfällig");
 		list();
 	}
 }

@@ -24,13 +24,26 @@ require("../functions.php");
 			return false;
 		}
 	}
-
+	function clearStatus() {
+		new selectElement("msg").setText("");
+	}
 	function doReturnObject(id) {
+		var req = new ajax();
+		req.create("../handle.php?do=canbelend&id=" + id);
+		if(req.fetch() == 1) {
+			alert("Das Objekt ist nicht ausgeliehen!");
+			return;
+		}
+		var req = new ajax();
+		req.create("../handle.php?do=wholend&id=" + id);
+		var resp = req.fetch().toJSON();
 		if(returnobject(id)) {
 			new selectElement("msg").setText("Objekt zurückgegeben");
+			window.setTimeout(clearStatus, 1000);
 		}
 		else {
-			new selectElement("msg").setText("Objekt war überfällig");
+			new selectElement("msg").setText("Objekt war überfällig am "+resp[0].lend_expiredate);
+			window.setTimeout(clearStatus, 2000);
 		}
 		if($("sel")) {
 			new selectElement("sel").destroy();

@@ -5,19 +5,20 @@
 <script type="text/javascript">
 function check() {
 	var f = document.forms.f.elements.c.value;
-	if(f.length == 13) {
-		if(f == "<?php echo $quick_lend; ?>" || f == "1337000000006") {
+	//if(f.length == 13) {
+		
+		if(f == "<?php echo $quick_lend; ?>" || f == "1337000000006" || f =='l') {
 			location.href="lend.php";
 		}
-		if(f == "<?php echo $quick_return; ?>" || f == "1337000000013") {
+		if(f == "<?php echo $quick_return; ?>" || f == "1337000000013" || f =='r') {
 			location.href="return.php";
 		}
-		if(f == "<?php echo $quick_cancel; ?>") {
+		if(f == "<?php echo $quick_cancel; ?>"  || f =='c') {
 			location.href="../listobjects.php";
 		}
 		
 		
-	}
+	//}
 	return false;
 }
 </script>

@@ -983,4 +983,17 @@ function getmediatypes() {
 	return mysql_fetch_superarray(mysql_query("SELECT * FROM mediatypes ORDER BY media ASC"));
 }
 
+function get_lpropts() {
+	$query = "SELECT lpropts FROM meta";
+	$result = mysql_fetch_assoc(mysql_query($query));
+	return $result["lpropts"];
+}
+
+function set_lpropts($val) {
+	$val = mysql_real_escape_string($val);
+	$query = 'UPDATE meta SET lpropts = "' . $val. '"';
+	mysql_query($query);
+	echo "done";
+}
+
 ?>

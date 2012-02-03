@@ -5,6 +5,8 @@
 	$ids = explode(",", $ids);
 	$content = "";
 	$rtext = get_remindtext();
+	$i = 0;
+	$perpage = 3;
 	foreach($ids as $id) {
 		//echo "SELECT firstname, lastname, class, title, lend_expiredate, lend_date, author1_firstname, author1_lastname FROM lend, objects, pupils WHERE lend_returndate = '0-0-0' AND object_id =" . $id . " AND objects.id = lend.object_id AND pupils.id = lend_pupil_id";
 		$result = mysql_fetch_superarray(mysql_query("SELECT firstname, lastname, class, title, printed, lend_expiredate, lend_date, author1_firstname, author1_lastname FROM lend, objects, pupils WHERE lend_returndate = '0-0-0' AND object_id =" . $id . " AND objects.id = lend.object_id AND pupils.id = lend.pupil_id"));
@@ -22,9 +24,15 @@
 		$text = str_replace("%ldate", convertdate($result[0]["lend_date"]), $text);
 		$text = str_replace("%edate", convertdate($result[0]["lend_expiredate"]), $text);
 		$text = str_replace("%n", $result[0]["printed"], $text);
-		$text = str_replace("%fine", "€".number_format($fine*intval($result[0]["printed"]), 2, ",", "."), $text);
-		$text = str_replace("%rfine", "€".number_format($fine, 2, ",", "."), $text);
+		$text = str_replace("%fine", "\\euro ".number_format($fine*intval($result[0]["printed"]), 2, ",", "."), $text);
+		$text = str_replace("%rfine", "\\euro".number_format($fine, 2, ",", "."), $text);
 		$content = $content . $text;
+		
+		$i++;
+		if($i == $perpage) {
+			$i =0;
+			$content = $content . "\\newpage";
+		}
 	}
 	
 	
@@ -45,36 +53,41 @@
 <script type="text/javascript" src="std.js">
 	</script>
 <script type="text/javascript">
-function doprint(e) {
-	var q = window.confirm("Soll der Mahnungszähler erhöht werden?");
+	basket = [<?php echo join(",", $ids)?>];
+function doclose(e) {
+	var q = window.confirm("Sollen die Mahnungszähler erhöht werden?");
+	
 	if(q) {
-		var req = new ajax();
-		var url ="handle.php?do=advanceprinted&id=<?php echo $id; ?>";
-		req.create(url);
-		var resp = req.fetch();
-		if(resp != "done") {
-			alert(resp);
+		var i= 0;
+		while(i<basket.length) {
+			var req = new ajax();
+			var url ="handle.php?do=advanceprinted&id="+basket[i];
+			req.create(url);
+			var resp = req.fetch();
+			if(resp != "done") {
+				alert(resp);
+			}
+			i++;
 		}
 	}
 	//alert(e.style.display);
 	//e.style.display = "none";
-	window.print();
 	
 }
 </script>
 </head>
-<body><!--
-	<h1 class="break">Mahnung</h1>
-	<p>Liebe/r <?php echo $presult[0]["firstname"]; ?> <?php echo $presult[0]["lastname"]; ?> aus der Klasse <?php echo $presult[0]["class"]; ?></p>
-	<p>Du hast das Objekt «<?php echo $oresult[0]["title"]; ?>» von <?php echo $oresult[0]["author1_lastname"]; ?>, <?php echo $oresult[0]["author1_firstname"]; ?> am <?php echo convertdate($lresult[0]["lend_date"]); ?> ausgeliehen und nicht bis zum <?php echo convertdate($lresult[0]["lend_expiredate"]); ?> zurückgebracht.</p>
-	<p>Dies ist deine <?php echo $lresult[0]["printed"]; ?>. Mahnung</p>
-	-->
-	
+<body>
+	<button class="hid" onclick="doclose(); window.top.reset()">Schließen</button>
 	<?php
-	echo $content;
+	file_put_contents("ruffeltex/body.tex", $content);
+	$r = system("make -C ruffeltex");
+	if ($r === FALSE) {
+		die("Fehler beim Erzeugen");
+	}
+	system("lpr " . get_lpropts() . " ruffeltex/mahnung.pdf");
+	echo("lpr " . get_lpropts() . " ruffeltex/mahnung.pdf");
 	?>
 	</p>
-	<button class="hid" OnClick="doprint(this)">Drucken</button>
-	<button class="hid" onclick="window.top.killpopup()">Schließen</button>
+	
 </body>
 </html>

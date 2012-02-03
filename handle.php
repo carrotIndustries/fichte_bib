@@ -228,6 +228,15 @@ switch($action) {
 		set_fine($_GET["val"]);
 	break;
 	
+	case "getlpropts" :
+		echo get_lpropts();
+	break;
+	
+	case "setlpropts" :
+		set_lpropts($_GET["val"]);
+	break;
+	
+	
 	case "getformdefaults" :
 		echo implode(",", get_formdefaults());
 	break;
@@ -239,6 +248,15 @@ switch($action) {
 	case "setlatest" :
 		set_latest($_GET["date"], $_GET["mode"]);
 	break;
+	
+	case "getlpropts" :
+		echo get_lpropts();
+	break;
+	
+	case "setlpropts" :
+		set_lpropts($_GET["val"]);
+	break;
+	
 }
 
 

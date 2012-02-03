@@ -20,13 +20,13 @@ require("functions.php");
 </head>
 <body onLoad="init()">
 <?php require("header.php") ?>
-Mahnungstext, verwende HTML zur Formatierung
+Mahnungstext, verwende LaTeX-Markup zur Formatierung
 
 	
 <form id="input" name="input" OnSubmit="return false;">
-<textarea name="text" id="text" rows="25" cols="200"></textarea>
-<br />Mahngebühr/Mahnung: €<input name="fine" id="fine" maxlength="4" size="4"></input> Verwende . (Punkt) als Dezimaltrenner<br />
-
+<textarea name="text" id="text" rows="25" cols="150"></textarea>
+<br />Mahngebühr/Mahnung: €<input name="fine" id="fine" maxlength="4" size="4"></input> Verwende . (Punkt) als Dezimaltrenner
+<br />Zusätzliche Optionen für LPR: <input name="lpr" id="lpr" maxlength="128" size="16"></input> Siehe lpr(1) für gültige Optionen<br />
 <input type="button" value="Übernehmen" onclick="process()"><br />
 </form>
 <br />
